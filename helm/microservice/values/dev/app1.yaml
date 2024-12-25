@@ -1,0 +1,112 @@
+deploy_environment: "sd4776-dev"
+telegram_channel: "-4081193833"
+nameOverride: &nameOverride "sd4776-dev-app1"
+fullnameOverride: *nameOverride
+Rollout:
+  enabled: false
+
+image:
+  repository: 657177457547.dkr.ecr.us-east-1.amazonaws.com/sd4776-dev-app1
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "dev"
+
+replicaCount: 1
+revisionHistoryLimit: 3
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: *nameOverride
+
+podSecurityContext: {}
+# fsGroup: 2000
+
+securityContext: {}
+
+env:
+  - name: environment
+    value: "dev"
+  - name: application
+    value: *nameOverride
+
+envFrom: []
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+probes:
+  enabled: true
+  startupProbe:
+    httpGet:
+      path: /
+      port: 80
+      httpHeaders:
+        - name: Accept
+          value: application/json
+    failureThreshold: 10
+    periodSeconds: 5
+    initialDelaySeconds: 15
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 80
+      httpHeaders:
+        - name: Accept
+          value: application/json
+    timeoutSeconds: 2
+    failureThreshold: 3
+    # periodSeconds: 10 (production)
+    periodSeconds: 30
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 80
+      httpHeaders:
+        - name: Accept
+          value: application/json
+    initialDelaySeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+    # periodSeconds: 10 (production)
+    periodSeconds: 30
+
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations:
+  - key: dedicated
+    value: app
+    effect: NoSchedule
+
+affinity: {}

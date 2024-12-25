@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dev-sd4776-microservice-applicationset
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: 'https://github.com/nguyenvanvuong1/gitops'
+        revision: "main"
+        # folder operations
+        files:
+          - path: "application/dev/*.yaml"
+  template:
+    metadata:
+      name: '{{path.basename}}-sd4776-{{nameOverride}}'
+      labels:
+        app.kubernetes.io/name: '{{nameOverride}}'
+        app.kubernetes.io/env: '{{path.basename}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: '{{nameOverride}}=657177457547.dkr.ecr.us-east-1.amazonaws.com/{{nameOverride}}'
+        'argocd-image-updater.argoproj.io/{{nameOverride}}.update-strategy': latest
+        'argocd-image-updater.argoproj.io/{{nameOverride}}.force-update': 'true'
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-repo-secret
+        argocd-image-updater.argoproj.io/git-branch: 'main'
+        notifications.argoproj.io/subscribe.on-sync-status-unknown.telegram: '{{telegram_channel}}'
+        notifications.argoproj.io/subscribe.on-sync-succeeded.telegram: '{{telegram_channel}}'
+    spec:
+      project: '{{path.basename}}-sd4776-project'
+      source:
+        repoURL: 'https://github.com/nguyenvanvuong1/gitops'
+        path: "helm/microservice"
+        targetRevision: "main"
+        helm:
+          valueFiles:
+            - "values/{{path.basename}}/{{path.filename}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{deploy_environment}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - PruneLast=true
+
+
+
