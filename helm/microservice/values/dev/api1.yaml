@@ -70,7 +70,7 @@ probes:
   livenessProbe:
     httpGet:
       path: /
-      port: 5101
+      port: 80
       httpHeaders:
         - name: Accept
           value: application/json
@@ -81,7 +81,7 @@ probes:
   readinessProbe:
     httpGet:
       path: /
-      port: 5101
+      port: 80
       httpHeaders:
         - name: Accept
           value: application/json
