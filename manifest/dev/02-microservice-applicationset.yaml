@@ -18,7 +18,7 @@ spec:
         app.kubernetes.io/name: '{{nameOverride}}'
         app.kubernetes.io/env: '{{path.basename}}'
       annotations:
-        argocd-image-updater.argoproj.io/image-list: '{{nameOverride}}=657177457547.dkr.ecr.us-east-1.amazonaws.com/{{nameOverride}}'
+        argocd-image-updater.argoproj.io/image-list: '{{nameOverride}}=486786740148.dkr.ecr.ap-southeast-1.amazonaws.com/{{nameOverride}}'
         'argocd-image-updater.argoproj.io/{{nameOverride}}.update-strategy': latest
         'argocd-image-updater.argoproj.io/{{nameOverride}}.force-update': 'true'
         argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-repo-secret

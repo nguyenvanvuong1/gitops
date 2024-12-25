@@ -6,7 +6,7 @@ Rollout:
   enabled: false
 
 image:
-  repository: 657177457547.dkr.ecr.us-east-1.amazonaws.com/sd4776-dev-app2
+  repository: 486786740148.dkr.ecr.ap-southeast-1.amazonaws.com/sd4776-dev-app2
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "dev"
