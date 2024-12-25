@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: 486786740148.dkr.ecr.ap-southeast-1.amazonaws.com/sd4776-dev-app1
+    forcestring: true
+  - name: image.tag
+    value: "11"
+    forcestring: true
