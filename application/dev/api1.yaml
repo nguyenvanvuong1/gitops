@@ -53,7 +53,7 @@ resources:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 5101
 
 probes:
   enabled: true
