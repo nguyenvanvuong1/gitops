@@ -94,16 +94,16 @@ probes:
 
 ingress:
   enabled: false
-  - host: "foo.bar.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/bar"
-        backend:
-          service:
-            name: service1
-            port:
-              number: 80
+  # - host: "foo.bar.com"
+  #   http:
+  #     paths:
+  #     - pathType: Prefix
+  #       path: "/bar"
+  #       backend:
+  #         service:
+  #           name: service1
+  #           port:
+  #             number: 80
 
 autoscaling:
   enabled: false
