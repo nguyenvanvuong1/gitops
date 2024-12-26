@@ -59,14 +59,14 @@ probes:
   enabled: true
   startupProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
     failureThreshold: 10
     periodSeconds: 5
     initialDelaySeconds: 15
   livenessProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
     timeoutSeconds: 2
     failureThreshold: 3
@@ -74,7 +74,7 @@ probes:
     periodSeconds: 30
   readinessProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
     initialDelaySeconds: 10
     timeoutSeconds: 2
