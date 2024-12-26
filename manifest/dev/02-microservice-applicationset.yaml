@@ -33,7 +33,7 @@ spec:
         targetRevision: "main"
         helm:
           valueFiles:
-            - "../../aplication/{{path.basename}}/{{path.filename}}"
+            - "../../application/{{path.basename}}/{{path.filename}}"
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: '{{deploy_environment}}'
