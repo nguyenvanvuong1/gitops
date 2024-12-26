@@ -59,7 +59,7 @@ probes:
   enabled: true
   startupProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
       httpHeaders:
         - name: Accept
@@ -69,7 +69,7 @@ probes:
     initialDelaySeconds: 15
   livenessProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
       httpHeaders:
         - name: Accept
@@ -80,7 +80,7 @@ probes:
     periodSeconds: 30
   readinessProbe:
     httpGet:
-      path: /
+      path: /weatherforecast
       port: 5101
       httpHeaders:
         - name: Accept
