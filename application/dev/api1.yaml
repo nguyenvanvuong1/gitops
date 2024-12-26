@@ -9,7 +9,7 @@ image:
   repository: 486786740148.dkr.ecr.ap-southeast-1.amazonaws.com/sd4776-dev-app1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "8"
+  tag: "2"
 
 replicaCount: 1
 revisionHistoryLimit: 3
